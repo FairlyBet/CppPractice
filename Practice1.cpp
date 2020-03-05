@@ -293,21 +293,21 @@ bool AlphabetComparison(char CurrentStudent[56], char NextStudent[56])
 
 void AlphabetSort(struct PERSON VUZ[Amount], int* InSameDate, int AmountInSameDate)
 {
-   for (size_t i = 0; i < AmountInSameDate; i++)
-    {
-        for (size_t j = 0; j < AmountInSameDate - 1; j++)
+        for (size_t i = 0; i < AmountInSameDate; i++)
         {
-            if (AlphabetComparison(VUZ[InSameDate[j]].Name.LastName, VUZ[InSameDate[j + 1]].Name.LastName))
-                swap(InSameDate[j], InSameDate[j + 1]);
+            for (size_t j = 0; j < AmountInSameDate - 1; j++)
+            {
+                if (AlphabetComparison(VUZ[InSameDate[j]].Name.LastName, VUZ[InSameDate[j + 1]].Name.LastName))
+                    swap(InSameDate[j], InSameDate[j + 1]);
+            }
         }
-    }
 
-    for (size_t i = 0; i < AmountInSameDate; i++)
-    {
-        cout << "ФИО " << VUZ[InSameDate[i]].Name.LastName << " " << VUZ[InSameDate[i]].Name.FirstName << " " << VUZ[InSameDate[i]].Name.MiddleName << endl;
+        for (size_t i = 0; i < AmountInSameDate; i++)
+        {
+            cout << "ФИО " << VUZ[InSameDate[i]].Name.LastName << " " << VUZ[InSameDate[i]].Name.FirstName << " " << VUZ[InSameDate[i]].Name.MiddleName << endl;
 
-        VUZ[InSameDate[i]].isDisplayed = true;
-    }
+            VUZ[InSameDate[i]].isDisplayed = true;
+        }
 }
 
 void DateSort(struct PERSON VUZ[Amount], int* InSameGroup, int AmountInSameGroup)
@@ -348,7 +348,7 @@ void DateSort(struct PERSON VUZ[Amount], int* InSameGroup, int AmountInSameGroup
 
                 VUZ[InSameGroup[i]].isDisplayed = true;
             }
-            AmountInSameDate = 0;
+            AmountInSameDate = 0, counter = 0;
         }
     }   
 }
@@ -393,7 +393,7 @@ void GroupSort(struct PERSON VUZ[Amount], int* InSameFAC, int AmountInSameFAC)
 
                 VUZ[InSameFAC[i]].isDisplayed = true;
             }
-            AmountInSameGroup = 0;
+            AmountInSameGroup = 0, counter = 0;
         }
     }
 }
@@ -440,7 +440,7 @@ void FACSort(struct PERSON VUZ[Amount])
 
                 VUZ[i].isDisplayed = true;
             }
-            AmountInSameFAC = 0;
+            AmountInSameFAC = 0, counter = 0;
         }
     }    
 }
