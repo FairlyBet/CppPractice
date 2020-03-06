@@ -125,7 +125,7 @@ void task2()
 	}
 }
 
-const int AmountOfStudents = 3;
+const int AmountOfStudents = 10;
 
 bool SimileFac(char CurrentFac[30], char NextFac[30])
 {
