@@ -109,6 +109,8 @@ void task2()
 
         ListOfWorkers[i].year = rand() % 21 + 2000;
         AverageExperience += 2020 - ListOfWorkers[i].year;
+
+        cout << endl;
     }
 
     AverageExperience /= AmountOfWorkers;
@@ -117,7 +119,7 @@ void task2()
 
     for (size_t i = 0; i < AmountOfWorkers; i++)
     {
-        if (ListOfWorkers[i].year > AverageExperience)
+        if (2020 - ListOfWorkers[i].year > AverageExperience)
             cout << ListOfWorkers[i].lastName << " " << ListOfWorkers[i].firstName << " " << ListOfWorkers[i].middleName << endl << "Должность: " << ListOfWorkers[i].position << endl << "Пол: " << ListOfWorkers[i].gender << endl << "Год приема на работу: " << ListOfWorkers[i].year << endl << endl;
     }
 }
@@ -168,7 +170,7 @@ struct DATE
 
     void getDate()
     {
-        cout << "Введите дату дд-мм-г" << endl;
+        cout << "Введите дату поступления дд-мм-г" << endl;
 
         if (!(cin >> day >> month >> year))
         {
@@ -285,7 +287,9 @@ bool AlphabetComparison(char CurrentStudent[56], char NextStudent[56])
 {
     for (size_t i = 0; i < 56; i++)
     {
-        if (int(CurrentStudent[i]) > int(NextStudent[i]))
+        if (int(CurrentStudent[i]) < int(NextStudent[i]))
+            return 0;
+        else if (int(CurrentStudent[i]) > int(NextStudent[i]))
             return 1;
     }
     return 0;
@@ -293,21 +297,21 @@ bool AlphabetComparison(char CurrentStudent[56], char NextStudent[56])
 
 void AlphabetSort(struct PERSON VUZ[Amount], int* InSameDate, int AmountInSameDate)
 {
-        for (size_t i = 0; i < AmountInSameDate; i++)
+    for (size_t i = 0; i < AmountInSameDate; i++)
+    {
+        for (size_t j = 0; j < AmountInSameDate - 1; j++)
         {
-            for (size_t j = 0; j < AmountInSameDate - 1; j++)
-            {
-                if (AlphabetComparison(VUZ[InSameDate[j]].Name.LastName, VUZ[InSameDate[j + 1]].Name.LastName))
-                    swap(InSameDate[j], InSameDate[j + 1]);
-            }
+            if (AlphabetComparison(VUZ[InSameDate[j]].Name.LastName, VUZ[InSameDate[j + 1]].Name.LastName))
+                swap(InSameDate[j], InSameDate[j + 1]);
         }
+    }
 
-        for (size_t i = 0; i < AmountInSameDate; i++)
-        {
-            cout << "ФИО " << VUZ[InSameDate[i]].Name.LastName << " " << VUZ[InSameDate[i]].Name.FirstName << " " << VUZ[InSameDate[i]].Name.MiddleName << endl;
+    for (size_t i = 0; i < AmountInSameDate; i++)
+    {
+        cout << "ФИО " << VUZ[InSameDate[i]].Name.LastName << " " << VUZ[InSameDate[i]].Name.FirstName << " " << VUZ[InSameDate[i]].Name.MiddleName << endl;
 
-            VUZ[InSameDate[i]].isDisplayed = true;
-        }
+        VUZ[InSameDate[i]].isDisplayed = true;
+    }
 }
 
 void DateSort(struct PERSON VUZ[Amount], int* InSameGroup, int AmountInSameGroup)
@@ -348,6 +352,7 @@ void DateSort(struct PERSON VUZ[Amount], int* InSameGroup, int AmountInSameGroup
 
                 VUZ[InSameGroup[i]].isDisplayed = true;
             }
+
             AmountInSameDate = 0, counter = 0;
         }
     }   
@@ -383,6 +388,7 @@ void GroupSort(struct PERSON VUZ[Amount], int* InSameFAC, int AmountInSameFAC)
 
                 delete[] InSameGroup;               
             }
+
             else
             {
                 cout << "Группа " << VUZ[InSameFAC[i]].Group << endl;
@@ -393,6 +399,7 @@ void GroupSort(struct PERSON VUZ[Amount], int* InSameFAC, int AmountInSameFAC)
 
                 VUZ[InSameFAC[i]].isDisplayed = true;
             }
+
             AmountInSameGroup = 0, counter = 0;
         }
     }
@@ -440,6 +447,7 @@ void FACSort(struct PERSON VUZ[Amount])
 
                 VUZ[i].isDisplayed = true;
             }
+
             AmountInSameFAC = 0, counter = 0;
         }
     }    
@@ -448,6 +456,8 @@ void FACSort(struct PERSON VUZ[Amount])
 void task3()
 {
     struct PERSON VUZ[Amount];
+
+    //заполнение всех полей
 
     for (size_t i = 0; i < Amount; i++)
     {
@@ -514,19 +524,29 @@ int main()
     while (true)
     {
         cout << "Выберите задание: 1)низкий уровень, 2)средний уровень, 3)высокий уровень" << endl;
-   
-        cin >> choice;
+          
+        while (!(cin >> choice))
+        {
+            cout << "Некорректный ввод числового значения!" << endl;
+            cin.clear(); // на случай, если предыдущий ввод завершился с ошибкой
+            cin.ignore(65535, '\n');
+            // cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+
         switch (choice)
         {
         case 1:
             task1();
             break;
+
         case 2:
             task2();
             break;
+
         case 3:
             task3();
             break;
+
         default:
             cout << "Неверный номер" << endl;
             break;
